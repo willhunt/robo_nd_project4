@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  	<world name="default">
+
+	  	<physics type="ode">
+			<ode>
+				<solver>
+					<type>quick</type>
+					<iters>50</iters>
+					<friction_model>cone_model</friction_model>
+				</solver>
+			</ode>
+		</physics>
+
+		<!-- <plugin name="welcome" filename="libwelcome.so"/> -->
+		<include>
+		  	<uri>model://ground_plane</uri>
+		</include>
+
+		<!-- Light Source - add manually to set direction-->
+		<light type="directional" name="sun_high">
+			<cast_shadows>true</cast_shadows>
+			<pose>0 0 10 0 -0.5 0</pose>
+			<diffuse>0.8 0.8 0.8 1</diffuse>
+			<specular>0.2 0.2 0.2 1</specular>
+			<attenuation>
+				<range>1000</range>
+				<constant>0.9</constant>
+				<linear>0.01</linear>
+				<quadratic>0.001</quadratic>
+			</attenuation>
+			<direction>-0.5 0.1 -0.9</direction>
+		</light>
+		<!-- <include> -->
+			<!-- <uri>model://wheelie_robot_stable</uri> -->
+		<!-- </include> -->
+		<include>
+			<uri>model://building_downstairs</uri>
+		</include>
+		<include>
+			<uri>model://bookshelf</uri>
+			<static>true</static>
+			<pose>-1.561 -2.139 0 0 0 1.5707</pose>
+		</include>
+		<include>
+			<uri>model://table</uri>
+			<static>true</static>
+			<pose>0.969 -2.728 0 0 0 0</pose>
+		</include>
+		<include>
+			<uri>model://ladder_60deg_0rails</uri>
+			<static>true</static>
+			<pose>-2.386 -0.795 0 0 0 0</pose>
+		</include>
+
+		<!-- <include>
+			<name>obstacle1</name>
+			<uri>model://whirly_obstacle</uri>
+			<pose>0 -0.8 0 0 0 0</pose>
+			<plugin name="spin_arm" filename="libspin_arm.so"/>
+		</include>
+		<include>
+			<name>obstacle2</name>
+			<uri>model://whirly_obstacle</uri>
+			<pose>-0.69 -2.45 0 0 0 0</pose>
+			<plugin name="spin_arm" filename="libspin_arm.so"/>
+		</include>
+		<include>
+			<uri>model://my_ball</uri>
+			<pose>5 0 0 0 0 0</pose>
+		</include> -->
+
+	</world>
+</sdf>
