@@ -25,16 +25,11 @@ $ rosdep install --from-paths src --ignore-src -r -y
 $ source devel/setup.bash
 ```
 
-#### Once the `robo_nd_project3` package has been built, you can launch using:
+#### Once the `robo_nd_project4` package has been built, you can launch using:
 ```sh
 $ roslaunch myrobot_main main.launch
 ```
-
-## Evidence of Localisation
-#### Teleoperated Localisation  
-Localisation during teleoperation through rqt.  
-<img src="/media/localisation_teleop1.gif" alt="localisation gif" width="250" height="250">
-
-#### Naviagation Localisation
-Localisation during navigation to goal using move_base.  
-<img src="/media/localisation_nav1.gif" alt="localisation gif" width="250" height="250">
+#### Inspect mapping database
+```sh
+$ rtabmap-databaseViewer ~/.ros/rtabmap.db
+```

@@ -1,23 +1,23 @@
 <launch>
     <!-- Args-->
     <arg name="debug" default="false"/>
-    <!-- Use drive controller (true) or gazebo skid steer plugin (false) -->
-    <arg name="use_drive_controller" default="true"/> 
 
     <!-- Robot and world -->
     <include file="$(find myrobot_gazebo)/launch/world.launch"/>
 
     <!-- Drive controller -->
-    <group if="$(arg use_drive_controller)">
-        <include file="$(find myrobot_control)/launch/control.launch"/>
-    </group>
-
+    <include file="$(find myrobot_control)/launch/control.launch"/>
 
     <!-- Navigation -->
-    <include file="$(find myrobot_navigation)/launch/navigation.launch"/>
+    <include file="$(find myrobot_navigation)/launch/navigation.launch">
+        <!-- true=move_base, false=teleop -->
+        <arg name="navmode_on" value="false" />  
+        <!-- true=SLAM, false=MCL -->
+        <arg name="slammode_on" value="true" />
+    </include>
     
     <!--launch rviz-->
-    <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find myrobot_main)/rviz/amcl.rviz"/>
+    <!-- <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find myrobot_main)/rviz/config.rviz"/> -->
 
     <!--  Debugging tools -->
     <group if="$(arg debug)">

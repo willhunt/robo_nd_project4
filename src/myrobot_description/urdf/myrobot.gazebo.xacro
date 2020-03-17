@@ -1,67 +1,55 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="myrobot_gazebo">
 
-    <xacro:if value="${use_drive_controller}">
-        <gazebo>
-            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <robotNamespace>/</robotNamespace>
-            </plugin>
-        </gazebo>
-    </xacro:if>
-    <xacro:unless value="${use_drive_controller}">
-        <!-- http://gazebosim.org/tutorials?tut=ros_gzplugins#SkidSteeringDrive -->
-        <gazebo>
-            <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-                <updateRate>10</updateRate>
-                <robotNamespace>/myrobot_diff_drive_controller</robotNamespace>
-                <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
-                <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
-                <leftRearJoint>back_left_wheel_joint</leftRearJoint>
-                <rightRearJoint>back_right_wheel_joint</rightRearJoint>
-                <wheelSeparation>0.31</wheelSeparation>
-                <wheelDiameter>0.2</wheelDiameter>
-                <robotBaseFrame>robot_footprint</robotBaseFrame>
-                <torque>20</torque>
-                <commandTopic>cmd_vel</commandTopic>
-                <broadcastTF>true</broadcastTF>
-                <odometryTopic>odom</odometryTopic>
-                <odometryFrame>odom</odometryFrame>
-                <covariance_x>0.001</covariance_x>
-                <covariance_y>0.001</covariance_y>
-                <covariance_yaw>0.1</covariance_yaw>
-            </plugin>
-        </gazebo>
-    </xacro:unless>
+    <!-- Drive controller -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
 
-    <!-- camera -->
+    <!-- RGBD Camera -->
     <gazebo reference="camera">
-        <sensor type="camera" name="camera1">
-            <update_rate>30.0</update_rate>
-            <camera name="head">
-                <horizontal_fov>1.3962634</horizontal_fov>
+        <sensor type="depth" name="camera1">
+            <always_on>1</always_on>
+            <update_rate>20.0</update_rate>
+            <visualize>true</visualize>             
+            <camera>
+                <horizontal_fov>1.047</horizontal_fov>  
                 <image>
-                    <width>800</width>
-                    <height>800</height>
+                    <width>640</width>
+                    <height>480</height>
                     <format>R8G8B8</format>
                 </image>
+                <depth_camera>
+
+                </depth_camera>
                 <clip>
-                    <near>0.02</near>
-                    <far>300</far>
+                    <near>0.1</near>
+                    <far>20</far>
                 </clip>
             </camera>
-            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
                 <alwaysOn>true</alwaysOn>
-                <updateRate>0.0</updateRate>
+                <updateRate>10.0</updateRate>
                 <cameraName>camera</cameraName>
+                <frameName>camera_link_optical</frameName>                   
                 <imageTopicName>rgb/image_raw</imageTopicName>
-                <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-                <frameName>camera</frameName>
-                <hackBaseline>0.07</hackBaseline>
-                <distortionK1>0.0</distortionK1>
-                <distortionK2>0.0</distortionK2>
-                <distortionK3>0.0</distortionK3>
-                <distortionT1>0.0</distortionT1>
-                <distortionT2>0.0</distortionT2>
+                <depthImageTopicName>depth/image_raw</depthImageTopicName>
+                <pointCloudTopicName>depth/points</pointCloudTopicName>
+                <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>              
+                <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>            
+                <pointCloudCutoff>0.4</pointCloudCutoff>                
+                    <hackBaseline>0.07</hackBaseline>
+                    <distortionK1>0.0</distortionK1>
+                    <distortionK2>0.0</distortionK2>
+                    <distortionK3>0.0</distortionK3>
+                    <distortionT1>0.0</distortionT1>
+                    <distortionT2>0.0</distortionT2>
+                <CxPrime>0.0</CxPrime>
+                <Cx>0.0</Cx>
+                <Cy>0.0</Cy>
+                <focalLength>0.0</focalLength>
             </plugin>
         </sensor>
     </gazebo>

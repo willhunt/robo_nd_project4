@@ -19,9 +19,6 @@
     <xacro:property name="wheel_rad" value="0.1" />
     <xacro:property name="wheel_forward_offset" value="0.13" />
     <xacro:property name="wheel_left_offset" value="${chassis_width/2 + 0.05}" />
-    <!-- <xacro:property name="wheel_friction" value="0.3" /> -->
-
-    <xacro:property name="use_drive_controller" value="true" />
     
     <!-- PLUGINS -->
     <xacro:include filename="$(find myrobot_description)/urdf/myrobot.gazebo.xacro" />
@@ -114,6 +111,14 @@
         <parent link="chassis"/>
         <child link="camera"/>
         <axis xyz="0 1 0"/>
+    </joint>
+
+    <link name="camera_link_optical">
+    </link>
+    <joint name="camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5707 0 -1.5707"/>
+        <parent link="camera"/>
+        <child link="camera_link_optical"/>
     </joint>
 
     <link name="hokuyo">

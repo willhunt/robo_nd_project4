@@ -1,18 +1,25 @@
 <launch>
-    <arg name="navmode" default="true"/>
+    <arg name="navmode_on" default="true"/>
+    <arg name="slammode_on" default="true"/>
 
-    <!-- Map server node name="map_server" -->
-    <arg name="map_file" default="$(find myrobot_navigation)/maps/maze_map.yaml"/>
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+    <group if="$(arg slammode_on)">
+        <!-- SLAM mapping with rtabmap_ros -->
+        <include file="$(find myrobot_navigation)/launch/mapping.launch"/>
+    </group>
+    <group unless="$(arg slammode_on)">
+        <!-- Map server node name="map_server" -->
+        <arg name="map_file" default="$(find myrobot_navigation)/maps/maze_map.yaml"/>
+        <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
-    <!-- AMCl node name="amcl" -->
-    <node name="amcl" pkg="amcl" type="amcl" output="screen">
-        <remap from="scan" to="scan" />
-        <rosparam file="$(find myrobot_navigation)/config/amcl_params.yaml" command="load" />
-    </node>
+        <!-- AMCl node name="amcl" -->
+        <node name="amcl" pkg="amcl" type="amcl" output="screen">
+            <remap from="scan" to="scan" />
+            <rosparam file="$(find myrobot_navigation)/config/amcl_params.yaml" command="load" />
+        </node>
+    </group>
     
-    <!-- Move base node name="move_base" -->
-    <group if="$(arg navmode)">
+    <group if="$(arg navmode_on)">
+        <!-- Move base node name="move_base" -->
         <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
 
             <remap from="cmd_vel" to="/myrobot_diff_drive_controller/cmd_vel" />
@@ -27,7 +34,7 @@
             <rosparam file="$(find myrobot_navigation)/config/base_local_planner_params.yaml" command="load" />
         </node>
     </group>
-    <group unless="$(arg navmode)">
+    <group unless="$(arg navmode_on)">
         <!-- RQT Controller -->
         <node name="rqt_drive" pkg="rqt_robot_steering" type="rqt_robot_steering" >
             <remap from="cmd_vel" to="/myrobot_diff_drive_controller/cmd_vel" />
