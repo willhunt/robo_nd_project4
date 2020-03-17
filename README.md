@@ -38,8 +38,13 @@ $ rtabmap-databaseViewer ~/.ros/rtabmap.db
 62 loop closures detected with 3 passes through the enviornment using approximately the same path (via teleoperation).  
 Rtab database copy stored in /rtab_database_archive.
 #### Final map
-<img src="/media/rtab_map.png" alt="rtab map image" width="250" height="250">
-<img src="/media/gazebo_world.png" alt="world image" width="250" height="250">
+<div class="row">
+  <div class="column">
+    <img src="/media/rtab_map.png" alt="rtab map image" width="auto" height="250">
+  </div>
+  <div class="column">
+    <img src="/media/gazebo_world.png" alt="world image" width="auto" height="250">  </div>
+  </div>
 
 #### Loop Closures
-<img src="/media/loop_closures.png" alt="loop closures image" width="250" height="250">
+<img src="/media/loop_closures.png" alt="loop closures image" width="auto" height="150">
