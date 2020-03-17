@@ -33,3 +33,13 @@ $ roslaunch myrobot_main main.launch
 ```sh
 $ rtabmap-databaseViewer ~/.ros/rtabmap.db
 ```
+
+## Mapping Results
+62 loop closures detected with 3 passes through the enviornment using approximately the same path (via teleoperation).  
+Rtab database copy stored in /rtab_database_archive.
+#### Final map
+<img src="/media/rtab_map.png" alt="rtab map image" width="250" height="250">
+<img src="/media/gazebo_world.png" alt="world image" width="250" height="250">
+
+#### Loop Closures
+<img src="/media/loop_closures.png" alt="loop closures image" width="250" height="250">

@@ -1,21 +1,22 @@
 <launch>
     <arg name="navmode_on" default="true"/>
-    <arg name="slammode_on" default="true"/>
+    <arg name="localmode_on" default="true"/>
 
-    <group if="$(arg slammode_on)">
+    <group if="$(arg localmode_on)">
         <!-- SLAM mapping with rtabmap_ros -->
-        <include file="$(find myrobot_navigation)/launch/mapping.launch"/>
-    </group>
-    <group unless="$(arg slammode_on)">
-        <!-- Map server node name="map_server" -->
-        <arg name="map_file" default="$(find myrobot_navigation)/maps/maze_map.yaml"/>
-        <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+        <include file="$(find myrobot_navigation)/launch/localisation.launch"/>
 
         <!-- AMCl node name="amcl" -->
         <node name="amcl" pkg="amcl" type="amcl" output="screen">
             <remap from="scan" to="scan" />
             <rosparam file="$(find myrobot_navigation)/config/amcl_params.yaml" command="load" />
         </node>
+    </group>
+    <group unless="$(arg localmode_on)">
+
+        <!-- SLAM mapping with rtabmap_ros -->
+        <include file="$(find myrobot_navigation)/launch/mapping.launch"/>
+        
     </group>
     
     <group if="$(arg navmode_on)">
