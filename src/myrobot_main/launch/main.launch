@@ -13,11 +13,11 @@
         <!-- true=move_base, false=teleop -->
         <arg name="navmode_on" value="false" />  
         <!-- true=SLAM, false=MCL -->
-        <arg name="slammode_on" value="true" />
+        <arg name="slammode_on" value="false" />
     </include>
     
     <!--launch rviz-->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find myrobot_main)/rviz/config.rviz"/> -->
+    <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find myrobot_main)/rviz/config.rviz"/>
 
     <!--  Debugging tools -->
     <group if="$(arg debug)">
